@@ -24,7 +24,7 @@
 
   const baseSrc = trimSrc(src);
   const placeholder = lqip
-    ? `${baseSrc}?blur=500&px=8&auto=format`
+    ? `${baseSrc}?w=0.75&blur=300&px=16&auto=format`
     : 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
   /** @type {number[]} */
   const resolutions = [];

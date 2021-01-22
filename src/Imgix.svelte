@@ -16,14 +16,16 @@
   /** @type {object} */
   export let imgixParams = {};
   /** @type {boolean} */
-  export let blur = false;
+  export let lqip = true;
 
   /** @type {HTMLImageElement} */
   let img;
   let intersected = false;
 
   const baseSrc = trimSrc(src);
-  const placeholder = blur ? `${baseSrc}?blur=500&px=8&auto=format` : 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+  const placeholder = lqip
+    ? `${baseSrc}?blur=500&px=8&auto=format`
+    : 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
   /** @type {number[]} */
   const resolutions = [];
 
@@ -82,6 +84,6 @@
   bind:this={img}
   src={intersected ? configuredSrc : placeholder}
   {alt}
-  srcset={intersected ? srcset : ''}
+  srcset={intersected ? srcset : null}
   {...$$restProps}
 />

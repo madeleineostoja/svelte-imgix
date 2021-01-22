@@ -20,6 +20,7 @@ npm i svelte-imgix
 
 <Imgix
   src="https://assets.imgix.com/image.jpg"
+  sizes="(max-width: 800px) 100vw, 50vw"
 />
 ```
 
@@ -45,8 +46,9 @@ You can either provide a full Imgix URL (with query parameters) to `svelte-imgix
 
 ### Properties
 
-| Property      | Type     | Description                                                                           |
-| ------------- | -------- | ------------------------------------------------------------------------------------- |
-| `src`         | `string` | Imgix source of the image                                                             |
-| `alt`         | `string` | Alt text for the image                                                                |
-| `ImgixParams` | `object` | Object of Imgix parameters to set on the image, overrides any defaults given in `src` |
+| Property      | Type      | Description                                                                                                                          |
+| ------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `src`         | `string`  | Imgix source of the image                                                                                                            |
+| `alt`         | `string`  | Alt text for the image                                                                                                               |
+| `lqip`        | `boolean` | Whether to generate a Low Quality Image Placeholder that blurs up to the full resolution image when lazyloading (defaults to `true`) |
+| `ImgixParams` | `object`  | Object of Imgix parameters to set on the image, overrides any defaults given in `src`                                                |

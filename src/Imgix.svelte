@@ -15,13 +15,15 @@
   export let alt = undefined;
   /** @type {object} */
   export let imgixParams = {};
+  /** @type {boolean} */
+  export let blur = false;
 
   /** @type {HTMLImageElement} */
   let img;
   let intersected = false;
 
   const baseSrc = trimSrc(src);
-  const placeholder = `${baseSrc}?blur=500&px=8&auto=format`;
+  const placeholder = blur ? `${baseSrc}?blur=500&px=8&auto=format` : 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
   /** @type {number[]} */
   const resolutions = [];
 
@@ -80,6 +82,6 @@
   bind:this={img}
   src={intersected ? configuredSrc : placeholder}
   {alt}
-  {srcset}
+  srcset={intersected ? srcset : ''}
   {...$$restProps}
 />

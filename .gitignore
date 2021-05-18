@@ -1,0 +1,10 @@
+# Deps
+node_modules
+
+# Build
+dist
+
+# Misc
+.DS_Store
+*.local
+

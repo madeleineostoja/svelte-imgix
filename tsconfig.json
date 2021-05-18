@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    // Modules
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "esnext",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+
+    // Type checking
+    "strict": true,
+    "allowJs": true,
+    "lib": ["dom", "esnext"],
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+
+    // Misc
+    "sourceMap": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist"
+  },
+  "include": ["src", "@types"]
+}

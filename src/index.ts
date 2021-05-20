@@ -4,7 +4,7 @@ function trimSrc(src: string) {
   return src.split(/[?#]/)[0];
 }
 
-function generateSrcset(src: string) {
+export function generateSrcset(src: string) {
   const resolutions: number[] = [],
     sets = [];
 

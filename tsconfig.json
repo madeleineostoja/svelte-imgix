@@ -17,7 +17,8 @@
     // Misc
     "sourceMap": true,
     "declaration": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "declarationDir": "./dist"
   },
   "include": ["src", "@types"]
 }

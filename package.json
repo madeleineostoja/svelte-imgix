@@ -17,8 +17,8 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/svelte-imgix.es.js",
-      "require": "./dist/svelte-imgix.umd.js"
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },

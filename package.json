@@ -19,7 +19,8 @@
     ".": {
       "import": "./dist/svelte-imgix.es.js",
       "require": "./dist/svelte-imgix.umd.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "keywords": [
     "svelte",

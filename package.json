@@ -1,14 +1,14 @@
 {
   "name": "svelte-imgix",
   "description": "Svelte action for responsive, lazily-loaded images with Imgix",
-  "version": "2.2.4",
+  "version": "2.2.3",
   "license": "MIT",
   "author": "Madeleine Ostoja",
   "files": [
     "dist"
   ],
   "main": "./dist/index.js",
-  "module": "./dist/index.es.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "scripts": {
     "develop": "rollup -cw",
@@ -17,7 +17,7 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/index.es.js",
+      "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
     "./package.json": "./package.json"

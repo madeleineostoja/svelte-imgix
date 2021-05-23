@@ -4,7 +4,7 @@ function trimSrc(src: string) {
   return src.split(/[?#]/)[0];
 }
 
-export function generateSrcset(src: string) {
+export function srcset(src: string) {
   const resolutions: number[] = [],
     sets = [];
 
@@ -26,20 +26,24 @@ export function generateSrcset(src: string) {
   return sets.join(', ');
 }
 
+export function placeholder(src: string) {
+  return `${trimSrc(src)}?w=0.5&blur=200&px=16&auto=format&colorquant=150`;
+}
+
 export default function imgix(img: HTMLImageElement, src: string) {
   let intersected = false;
   const observer = new IntersectionObserver((entries, observer) => {
     intersected = entries[0].isIntersecting;
     if (entries[0].intersectionRatio > 0) {
       img.src = src;
-      img.srcset = generateSrcset(src);
+      img.srcset = srcset(src);
     }
     if (intersected) {
       observer.unobserve(img);
     }
   });
 
-  img.src = `${trimSrc(src)}?w=0.5&blur=200&px=16&auto=format&colorquant=150`;
+  img.src = placeholder(src);
   observer.observe(img);
 
   return {

@@ -31,18 +31,15 @@ export function placeholder(src: string) {
 }
 
 function lazyImg(img: HTMLImageElement, src: string) {
-  let intersected = false;
   const observer = new IntersectionObserver((entries, observer) => {
-    intersected = entries[0].isIntersecting;
-    if (entries[0].intersectionRatio > 0) {
+    if (entries[0].isIntersecting) {
       img.src = src;
       img.srcset = srcset(src);
-    }
-    if (intersected) {
       observer.unobserve(img);
     }
   });
 
+  img.srcset = '';
   img.src = placeholder(src);
   observer.observe(img);
 

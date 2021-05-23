@@ -38,6 +38,14 @@ Svelte Imgix exports 2 additional helper functions that you can use to create LQ
 <img src={intersected ? srcset(imgixImg) : placeholder(imgixImg)} use:invew on:enter={() => intersected = true} />
 ```
 
+### SSR Support
+
+Until Svelte supports actions running in SSR, you might notice images don't have a src at all until `svelte-imgix` has hydrated. As a workaround, use the `placeholder` helper function to SSR an LQIP placeholder image manually. Svelte-imgix will then hydrate from there, with the same placeholder image, and load your full srcset once the image enters the viewport.
+
+```svelte
+<img use:imgix={src} src={placeholder(src)} />
+```
+
 ### Adding Sizes
 
 Svelte-Imgix automatically generates a responsive `srcset` for a huge range of viewport sizes. By adding a `sizes` attribute to your image you can instruct the browser to use the appropriate source based on media queries.

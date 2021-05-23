@@ -30,7 +30,7 @@ export function placeholder(src: string) {
   return `${trimSrc(src)}?w=0.5&blur=200&px=16&auto=format&colorquant=150`;
 }
 
-export default function imgix(img: HTMLImageElement, src: string) {
+function lazyImg(img: HTMLImageElement, src: string) {
   let intersected = false;
   const observer = new IntersectionObserver((entries, observer) => {
     intersected = entries[0].isIntersecting;
@@ -46,7 +46,17 @@ export default function imgix(img: HTMLImageElement, src: string) {
   img.src = placeholder(src);
   observer.observe(img);
 
+  return observer;
+}
+
+export default function imgix(img: HTMLImageElement, src: string) {
+  let observer = lazyImg(img, src);
+
   return {
+    update(newSrc: string) {
+      observer.unobserve(img);
+      observer = lazyImg(img, newSrc);
+    },
     destroy() {
       observer.unobserve(img);
     }

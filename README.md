@@ -40,7 +40,7 @@ Svelte Imgix exports 2 additional helper functions that you can use to create LQ
 
 ### SSR Support
 
-Until Svelte supports actions running in SSR, you might notice images don't have a src at all until `svelte-imgix` has hydrated. As a workaround, use the `placeholder` helper function to SSR an LQIP placeholder image manually. Svelte-imgix will then hydrate from there, with the same placeholder image, and load your full srcset once the image enters the viewport.
+Until Svelte [supports actions running in SSR](https://github.com/sveltejs/svelte/issues/4375), you might notice images don't have a src at all until `svelte-imgix` has hydrated. As a workaround, use the `placeholder` helper function to SSR an LQIP placeholder image manually. Svelte-imgix will then hydrate from there, with the same placeholder image, and load your full srcset once the image enters the viewport.
 
 ```svelte
 <img use:imgix={src} src={placeholder(src)} />

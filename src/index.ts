@@ -1,61 +1,72 @@
-import { stringify } from 'query-string';
+import { placeholder } from './lib/placeholder';
+import { srcset } from './lib/srcset';
 
-function trimSrc(src: string) {
-  return src.split(/[?#]/)[0];
-}
-
-export function srcset(src: string) {
-  const resolutions: number[] = [],
-    sets = [];
-
-  let prev = 100;
-
-  while (prev <= 8192) {
-    resolutions.push(2 * Math.round(prev / 2));
-    prev *= 1 + 0.08 * 2;
-  }
-
-  for (var i = 0; i < resolutions.length; i++) {
-    const params = {
-      w: resolutions[i]
-    };
-
-    sets.push(`${trimSrc(src)}?${stringify(params)} ${resolutions[i]}w`);
-  }
-
-  return sets.join(', ');
-}
-
-export function placeholder(src: string) {
-  return `${trimSrc(src)}?w=0.5&blur=200&px=16&auto=format&colorquant=150`;
-}
-
-function lazyImg(img: HTMLImageElement, src: string) {
-  const observer = new IntersectionObserver((entries, observer) => {
-    if (entries[0].isIntersecting) {
-      img.src = src;
-      img.srcset = srcset(src);
-      observer.unobserve(img);
+export type ImgixProps = { [key: string]: string };
+export type SvelteImgixOptions =
+  | {
+      src: string;
+      lazyload: boolean;
+      imgixProps: ImgixProps;
     }
-  });
+  | string;
 
-  img.srcset = '';
-  img.src = placeholder(src);
-  observer.observe(img);
+const DEFAULTS = {
+  src: '',
+  lazyload: false,
+  imgixProps: {}
+};
 
-  return observer;
-}
+export default function imgix(img: HTMLImageElement, opts: SvelteImgixOptions) {
+  const src = typeof opts === 'string' ? opts : opts.src,
+    { imgixProps, lazyload } = Object.assign(
+      DEFAULTS,
+      typeof opts === 'object' ? opts : {}
+    );
 
-export default function imgix(img: HTMLImageElement, src: string) {
-  let observer = lazyImg(img, src);
+  function hydrate(s: string) {
+    img.src = s;
+    img.srcset = srcset(s, imgixProps);
+  }
+
+  function reset(s: string) {
+    img.srcset = '';
+    img.src = placeholder(s, imgixProps);
+  }
+
+  function lazyImg(s: string) {
+    const observer = new IntersectionObserver((entries, observer) => {
+      if (entries[0].isIntersecting) {
+        hydrate(s);
+        observer.unobserve(img);
+      }
+    });
+    return observer;
+  }
+
+  let observer = lazyImg(src);
+
+  if (lazyload) {
+    reset(src);
+    observer.observe(img);
+  } else {
+    hydrate(src);
+  }
 
   return {
     update(newSrc: string) {
-      observer.unobserve(img);
-      observer = lazyImg(img, newSrc);
+      if (lazyload) {
+        reset(src);
+        observer.unobserve(img);
+        observer = lazyImg(newSrc);
+      } else {
+        hydrate(newSrc);
+      }
     },
     destroy() {
       observer.unobserve(img);
     }
   };
 }
+
+export { placeholder } from './lib/placeholder';
+export { srcset } from './lib/srcset';

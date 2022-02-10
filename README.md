@@ -2,12 +2,12 @@
 
 [![NPM](https://img.shields.io/npm/v/svelte-imgix)](https://www.npmjs.com/package/svelte-imgix) [![License](https://img.shields.io/npm/l/svelte-imgix)](https://github.com/peppercorntsudio/svelte-imgix/blob/master/LICENSE.md)
 
-Svelte action for responsive, lazily-loaded images with Imgix
+Svelte action for generating responsive, lazily-loaded images with Imgix
 
 ### Features
 
-- Lazy loading with automatic LQIP placeholders
 - Generate responsive image `srcsets` automatically
+- Optional lazy loading with automatic LQIP placeholders
 
 ### Basic Usage
 
@@ -20,22 +20,44 @@ npm i svelte-imgix
   import imgix from 'svelte-imgix';
 </script>
 
-<img use:imgix="some-imgix-img.jpeg" />
+<img use:imgix="https://assets.imgix.net/unsplash/vintagecameras.jpg" />
+```
+
+### With config
+
+Rather than passing a `src` image to `use:imgix`, you can pass a full configuration object with the following properties
+
+| Property     | Default | Description                                         |
+| ------------ | ------- | --------------------------------------------------- |
+| `src`        | `''`    | Src of the image                                    |
+| `lazyload`   | `false` | Delay loading the full res image until it's in view |
+| `imgixProps` | `{}`    | Additional imgix properties to pass to the image    |
+
+```svelte
+<img use:imgix={{
+  src: 'https://assets.imgix.net/unsplash/vintagecameras.jpg',
+  lazyload: false,
+  imgixParams: {
+    fit: 'crop',
+    ar:  '16:9'
+  }
+}} />
 ```
 
 ### Helper functions
 
-Svelte Imgix exports 2 additional helper functions that you can use to create LQIP placeholders and responsive srcsets yourself, `placeholder(src)` and `srcset(src`;
+Svelte Imgix exports 2 additional helpers that you can use to create responsive source sets and LQIP placeholders yourself, `srcset(src)` and `placeholder(src)`;
 
 ```svelte
 <script>
   import { placeholder, srcset } from 'svelte-imgix';
   import { invew } from 'svelte-inview';
 
+  let src = '';
   let intersected = false;
 </script>
 
-<img src={intersected ? srcset(imgixImg) : placeholder(imgixImg)} use:invew on:enter={() => intersected = true} />
+<img src={intersected ? src : placeholder(src)} srcset={intersected ? srcset(src} : ''} use:invew on:enter={() => intersected = true} />
 ```
 
 ### SSR Support

@@ -1,7 +1,7 @@
 {
   "name": "svelte-imgix",
   "description": "Svelte action for responsive, lazily-loaded images with Imgix",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "license": "MIT",
   "author": "Madeleine Ostoja",
   "files": [

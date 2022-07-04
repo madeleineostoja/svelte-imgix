@@ -2,6 +2,8 @@
 
 [![NPM](https://img.shields.io/npm/v/svelte-imgix)](https://www.npmjs.com/package/svelte-imgix) [![License](https://img.shields.io/npm/l/svelte-imgix)](https://github.com/peppercorntsudio/svelte-imgix/blob/master/LICENSE.md)
 
+> :warning: **You probably don't need this**: With native `loading="lazy"` image support on all evergreen browsers, all this library really offers now is srcset generation for imgix images. For that there's now the standalone [imgix-srcset](https://github.com/madeleineostoja/imgix-srcset) JS utility which can also be serverside rendered
+
 Svelte action for generating responsive, lazily-loaded images with Imgix
 
 ### Features
